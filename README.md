@@ -16,6 +16,7 @@ This application provides a simple way to find a substring within a larger strin
 - [Available Scripts](#available-scripts)
 - [Webpack Configuration](#webpack-configuration)
 - [Testing](#testing)
+- [GitHub Actions Configuration](#gitHub-actions-configuration)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -163,7 +164,7 @@ The following tests are executed:
 
 ---
 
-## CI Pipeline
+## GitHub Actions Configuration
 
 The project uses GitHub Actions for continuous integration. The pipeline is triggered on push events and workflow dispatches.
 

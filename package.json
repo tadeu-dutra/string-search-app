@@ -6,7 +6,15 @@
   "scripts": {
     "start": "webpack serve --open --hot",
     "build": "webpack",
-    "test": "jest"
+    "test": "jest",
+    "test:coverage": "jest --coverage"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "coverageDirectory": "coverage",
+    "collectCoverage": true,
+    "collectCoverageFrom": ["src/**/*.js"],
+    "coverageReporters": ["html", "text", "lcov"]
   },
   "keywords": [],
   "author": "Tadeu Augusto Dutra Pinto",
