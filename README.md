@@ -141,15 +141,11 @@ If not installed, download from [nodejs.org](https://nodejs.org/).
 
 Tests are located in the `tests/` directory and use [Jest](https://jestjs.io/). Jest is configured for ES modules and Babel transpilation. To run all tests:
 
-    ```bash
     npm test
-    ```
 
 To run tests with coverage:
 
-    ```bash
     npm test -- --coverage
-    ```
 
 ### Test Coverage
 
