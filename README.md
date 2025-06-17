@@ -50,6 +50,9 @@ All dependencies are managed via [npm](https://www.npmjs.com/):
 
 ```
 string-search-app/
+├── .github/
+│   └── testsworkflows/
+│        └── ci.yml
 ├── src/
 │   ├── index.html
 │   ├── index.js
