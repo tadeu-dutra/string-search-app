@@ -2,6 +2,8 @@
 
 This application provides a simple way to find a substring within a larger string using JavaScript’s `indexOf()` method, returning the position of the first occurrence of a specified substring. This project was developed as part of the `Front-End Development` module in my postgraduate course in Software Architecture. In addition to the course requirements, I implemented unit tests for the `findStringInsideAString` function using [Jest](https://jestjs.io/), ensuring robust string search behavior across various scenarios.
 
+![image](https://github.com/user-attachments/assets/cd587f1d-8e0e-4e0e-b17a-718cbecada72)
+
 ---
 
 ## Table of Contents
