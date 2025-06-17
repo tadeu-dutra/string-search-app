@@ -44,7 +44,7 @@ jobs:
       - name: Prepare custom index for GitHub Pages
         run: |
           cp coverage/lcov-report/index.html coverage/index.html
-          echo "<!DOCTYPE html><html><body><h1>QA Automation Project</h1><p>View the <a href=\"lcov-report/index.html\">Jest Coverage Report</a>.</p></body></html>" > coverage/index.html
+          echo "<!DOCTYPE html><html><body><h1>String Search App Report</h1><p>View the <a href=\"lcov-report/index.html\">Jest Coverage Report</a>.</p></body></html>" > coverage/index.html
 
       - name: Upload pages artifact
         uses: actions/upload-pages-artifact@v3
