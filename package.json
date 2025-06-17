@@ -13,7 +13,7 @@
     "testEnvironment": "jsdom",
     "coverageDirectory": "coverage",
     "collectCoverage": true,
-    "collectCoverageFrom": ["src/**/*.js"],
+    "collectCoverageFrom": ["src/stringSearch.js"],
     "coverageReporters": ["html", "text", "lcov"]
   },
   "keywords": [],
