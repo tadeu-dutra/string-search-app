@@ -139,15 +139,13 @@ If not installed, download from [nodejs.org](https://nodejs.org/).
 
 ## Testing
 
-- Tests are located in the `tests/` directory and use [Jest](https://jestjs.io/).
-- Jest is configured for ES modules and Babel transpilation.
-- To run all tests:
+Tests are located in the `tests/` directory and use [Jest](https://jestjs.io/). Jest is configured for ES modules and Babel transpilation. To run all tests:
 
     ```bash
     npm test
     ```
 
-- To run tests with coverage:
+To run tests with coverage:
 
     ```bash
     npm test -- --coverage
@@ -157,15 +155,13 @@ If not installed, download from [nodejs.org](https://nodejs.org/).
 
 The following tests are executed:
 
-- should return index and display success message when string is found
-- should return -1 and display error message when string is not found
-- should handle case-insensitive search correctly
-- should display error message and return -1 for empty input
-- should display error message and return -1 for non-string input
-- should find substring at the start of the text
-- should find substring at the end of the text
-
-- If you encounter issues with Jest and ES modules, ensure your `package.json` includes `"type": "module"` or configure Jest’s `moduleNameMapper` as needed.
+1. should return index and display success message when string is found
+2. should return -1 and display error message when string is not found
+3. should handle case-insensitive search correctly
+4. should display error message and return -1 for empty input
+5. should display error message and return -1 for non-string input
+6. should find substring at the start of the text
+7. should find substring at the end of the text
 
 ---
 
