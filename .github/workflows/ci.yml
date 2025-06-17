@@ -66,3 +66,7 @@ jobs:
     environment:
       name: github-pages
       url: https://tadeu-dutra.github.io/string-search-app/coverage/index.html
+    steps:
+      - name: Deploy to GitHub Pages
+        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
+        uses: actions/deploy-pages@v4
