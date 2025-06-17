@@ -163,6 +163,12 @@ The following tests are executed:
 
 ---
 
+## CI Pipeline
+
+The project uses GitHub Actions for continuous integration. The pipeline is triggered on push events and workflow dispatches.
+
+---
+
 ## Contributing
 
 Contributions are welcome! Please open issues or submit pull requests for improvements or bug fixes.
