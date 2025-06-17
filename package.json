@@ -4,7 +4,7 @@
   "description": "A string search web application",
   "main": "src/index.js",
   "scripts": {
-    "start": "webpack serve --open",
+    "start": "webpack serve --open --hot",
     "build": "webpack",
     "test": "jest"
   },

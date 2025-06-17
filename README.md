@@ -59,6 +59,13 @@ string-search-app/
 └── README.md
 ```
 
+- src/index.html: The main HTML file.
+- src/index.js: The entry point JavaScript file with event listeners.
+- src/stringSearch.js: The module containing findStringInsideAString and displayResult.
+- tests/stringSearch.test.js: The Jest unit tests.
+- webpack.config.js: Webpack configuration for bundling.
+Other configuration files (package.json, .babelrc) for dependencies and transpilation.
+
 ---
 
 ## Prerequisites
@@ -145,6 +152,18 @@ If not installed, download from [nodejs.org](https://nodejs.org/).
     ```bash
     npm test -- --coverage
     ```
+
+### Test Coverage
+
+The following tests are executed:
+
+- should return index and display success message when string is found
+- should return -1 and display error message when string is not found
+- should handle case-insensitive search correctly
+- should display error message and return -1 for empty input
+- should display error message and return -1 for non-string input
+- should find substring at the start of the text
+- should find substring at the end of the text
 
 - If you encounter issues with Jest and ES modules, ensure your `package.json` includes `"type": "module"` or configure Jest’s `moduleNameMapper` as needed.
 
