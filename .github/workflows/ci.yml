@@ -40,6 +40,11 @@ jobs:
           name: coverage-report
           path: coverage/
 
+      - name: Prepare custom index for GitHub Pages
+        run: |
+          cp coverage/lcov-report/index.html coverage/index.html
+          echo "<!DOCTYPE html><html><body><h1>String Search App</h1><p>View the <a href=\"lcov-report/index.html\">Jest Coverage Report</a>.</p></body></html>" > coverage/index.html
+
   deploy:
     name: Deploy to GitHub Pages
     runs-on: ubuntu-24.04
@@ -54,11 +59,6 @@ jobs:
       name: github-pages
       url: https://tadeu-dutra.github.io/string-search-app/coverage/index.html
     steps:
-      - name: Prepare custom index for GitHub Pages
-        run: |
-          cp coverage/lcov-report/index.html coverage/index.html
-          echo "<!DOCTYPE html><html><body><h1>String Search App</h1><p>View the <a href=\"lcov-report/index.html\">Jest Coverage Report</a>.</p></body></html>" > coverage/index.html
-
       - name: Upload pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
