@@ -10,7 +10,8 @@ on:
   workflow_dispatch:  # Allow manual triggering
 
 jobs:
-  test_and_deploy:
+  test:
+    name: Run Jest Tests
     runs-on: ubuntu-latest
     permissions:
       pages: write
@@ -39,6 +40,20 @@ jobs:
           name: coverage-report
           path: coverage/
 
+  deploy:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-24.04
+    if: always()
+    needs:
+      - test
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: https://tadeu-dutra.github.io/string-search-app/coverage/index.html
+    steps:
       - name: Prepare custom index for GitHub Pages
         run: |
           cp coverage/lcov-report/index.html coverage/index.html
