@@ -47,7 +47,7 @@ jobs:
         uses: actions/deploy-pages@v4
         with:
           path: coverage/
-          # overwrite: true
+          overwrite: true
 
   deploy:
     runs-on: ubuntu-latest
@@ -87,7 +87,7 @@ jobs:
         uses: actions/deploy-pages@v4
         with:
           path: dist/
-          # overwrite: true
+          overwrite: true
 
 
 
