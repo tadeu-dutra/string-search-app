@@ -21,8 +21,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          overwrite: true
+        # with:
+        #   overwrite: true
         # with:
         #   path: string-search-app
 
@@ -156,7 +156,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     if: always()
-    # needs: test
+    needs: test
     permissions:
       pages: write
       id-token: write
