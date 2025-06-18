@@ -28,8 +28,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          # cache: 'npm'
-          # cache-dependency-path: string-search-app/package.json
+          cache: 'npm'
+          cache-dependency-path: string-search-app/package.json
 
       - name: Install dependencies
         run: npm install
@@ -171,8 +171,8 @@ jobs:
         with:
           node-version: '18'
           overwrite: true
-          # cache: 'npm'
-          # cache-dependency-path: package.json
+          cache: 'npm'
+          cache-dependency-path: package.json
 
       - name: Install dependencies
         run: npm install
