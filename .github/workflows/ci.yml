@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: 'latest'
           cache: 'npm'
-          cache-dependency-path: package-lock.json
+          cache-dependency-path: string-search-app/package-lock.json
           overwrite: true
 
       - name: Install dependencies
@@ -60,19 +60,19 @@ jobs:
       name: github-pages-app
       url: https://tadeu-dutra.github.io/string-search-app/index.html
     steps:
-      # - name: Checkout code
-      #   uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      # - name: Set up Node.js
-      #   uses: actions/setup-node@v4
-      #   with:
-      #     node-version: 'latest'
-      #     cache: 'npm'
-      #     cache-dependency-path: package-lock.json
-      #     overwrite: true
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'latest'
+          cache: 'npm'
+          cache-dependency-path: string-search-app/package-lock.json
+          overwrite: true
 
-      # - name: Install dependencies
-      #   run: npm install -U
+      - name: Install dependencies
+        run: npm install -U
 
       - name: Build Web Application
         run: npm run build
