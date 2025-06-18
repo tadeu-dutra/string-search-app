@@ -21,37 +21,30 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          path: .
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
+          cache-dependency-path: package.json
 
       - name: Install dependencies
         run: npm install
+        working-directory: .
 
       - name: Test and Generate Coverage
         run: npm run test:coverage
-
-      # - name: Prepare Web Application Build
-      #   if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-      #   run: |
-      #     npm run build
-      #     cp -r coverage/ dist/coverage/ || echo "No coverage to copy"
-      #     cp coverage/index.html dist/coverage/index.html || echo "No coverage index to copy"
-
-      # - name: Upload Web Application Artifact
-      #   if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-      #   uses: actions/upload-pages-artifact@v3
-      #   with:
-      #     path: dist/
+        working-directory: .
 
       - name: Prepare Coverage Report
         if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
         run: |
           cp coverage/lcov-report/index.html coverage/index.html
           echo "<!DOCTYPE html><html><body><h1>Coverage Report</h1><p><a href=\"lcov-report/index.html\">View Coverage</a></p></body></html>" > coverage/index.html
+        working-directory: .
 
       - name: Upload Coverage Report Artifact
         if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
@@ -59,84 +52,62 @@ jobs:
         with:
           path: coverage/
 
-      - name: Deploy to GitHub Pages
-        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-        uses: actions/deploy-pages@v4
-
   deploy:
     runs-on: ubuntu-latest
     if: always()
-    needs:
-      - test
+    needs: test
     permissions:
       pages: write
       id-token: write
     environment:
       name: github-pages
-      url: https://tadeu-dutra.github.io/string-search-app/index.html
+      url: https://tadeu-dutra.github.io/string-search-app/
     steps:
-      # - name: Checkout code
-      #   uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          path: .
 
-      # - name: Set up Node.js
-      #   uses: actions/setup-node@v4
-      #   with:
-      #     node-version: '18'
-      #     cache: 'npm'
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: package.json
 
-      # - name: Install dependencies
-      #   run: npm install
+      - name: Install dependencies
+        run: npm install
+        working-directory: .
 
-      # - name: Build web application
-      #   run: npm run build
+      - name: Build Web Application
+        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
+        run: |
+          npm run build || { echo "Build failed"; exit 1; }
+          ls -la dist/ || echo "dist/ directory not found after build"
+        working-directory: .
 
-      - name: Upload pages artifact
+      - name: Prepare Web Application and Coverage
+        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
+        run: |
+          mkdir -p public
+          if [ -d "dist/" ]; then cp -r dist/* public/; else echo "dist/ not found, skipping copy"; fi
+          cp -r coverage/ public/coverage/ || echo "No coverage to copy"
+          cp coverage/index.html public/coverage/index.html || echo "No coverage index to copy"
+        working-directory: .
+
+      - name: Prepare Coverage Report
+        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
+        run: |
+          cp coverage/lcov-report/index.html public/coverage/index.html
+          echo "<!DOCTYPE html><html><body><h1>Coverage Report</h1><p><a href=\"coverage/lcov-report/index.html\">View Coverage</a></p></body></html>" > public/coverage/index.html
+        working-directory: .
+
+      - name: Upload Pages Artifact
+        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/  # Deploy the Webpack output
+          path: public/
 
       - name: Deploy to GitHub Pages
         if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
         uses: actions/deploy-pages@v4
-    # name: Deploy to GitHub Pages
-    # runs-on: ubuntu-latest
-    # if: always()
-    # needs:
-    #   - test
-    # permissions:
-    #   contents: read
-    #   pages: write
-    #   id-token: write
-    # environment:
-    #   name: github-pages
-    #   url: https://tadeu-dutra.github.io/string-search-app/index.html
-    # steps:
-    #   - name: Prepare Web Application Build
-    #     if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-    #     run: |
-    #       npm run build
-
-        # run: |
-        #   npm run build
-        #   cp -r coverage/ dist/coverage/ || echo "No coverage to copy"
-        #   cp coverage/index.html dist/coverage/index.html || echo "No coverage index to copy"
-
-
-
-
-
-
-      # - name: Upload Web Application Artifact
-      #   if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-      #   uses: actions/upload-pages-artifact@v3
-      #   with:
-      #     path: dist/
-  #     # - name: Deploy to GitHub Pages
-  #     #   if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-  #     #   uses: actions/deploy-pages@v4
-
-  #     - name: Upload Coverage Report Artifact
-  #       if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-  #       uses: actions/upload-pages-artifact@v3
-  #       with:
-  #         path: coverage/
