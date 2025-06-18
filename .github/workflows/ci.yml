@@ -61,7 +61,7 @@ jobs:
       id-token: write
     environment:
       name: github-pages-app
-      url: https://tadeu-dutra.github.io/string-search-app/index.html
+      url: https://tadeu-dutra.github.io/string-search-app/
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
