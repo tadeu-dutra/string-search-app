@@ -21,18 +21,23 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          path: string-search-app
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
+          cache-dependency-path: string-search-app/package.json
 
       - name: Install dependencies
         run: npm install
+        working-directory: string-search-app
 
       - name: Test and Generate Coverage
         run: npm run test:coverage
+        working-directory: string-search-app
 
       # - name: Prepare Web Application Build
       #   if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
@@ -52,12 +57,14 @@ jobs:
         run: |
           cp coverage/lcov-report/index.html coverage/index.html
           echo "<!DOCTYPE html><html><body><h1>Coverage Report</h1><p><a href=\"lcov-report/index.html\">View Coverage</a></p></body></html>" > coverage/index.html
+        working-directory: string-search-app
 
       - name: Upload Coverage Report Artifact
         if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
         uses: actions/upload-pages-artifact@v3
         with:
-          path: coverage/
+          name: coverage-artifact
+          path: string-search-app/coverage/
 
   # deploy:
   #   runs-on: ubuntu-latest
