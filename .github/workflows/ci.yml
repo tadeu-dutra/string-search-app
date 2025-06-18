@@ -91,8 +91,7 @@ jobs:
         run: |
           mkdir -p public
           if [ -d "dist/" ]; then cp -r dist/* public/; else echo "dist/ not found, skipping copy"; fi
-          cp -r coverage/ public/coverage/ || echo "No coverage to copy"
-          cp coverage/index.html public/coverage/index.html || echo "No coverage index to copy"
+          cp index.html public/index.html || echo "No coverage index to copy"
         working-directory: .
 
       # - name: Prepare Coverage Report
