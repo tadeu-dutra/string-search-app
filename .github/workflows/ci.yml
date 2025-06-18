@@ -10,7 +10,7 @@ on:
   workflow_dispatch:  # Allow manual triggering
 
 jobs:
-  ci_pipeline:
+  test:
     runs-on: ubuntu-latest
     permissions:
       pages: write
@@ -63,20 +63,32 @@ jobs:
       #   if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
       #   uses: actions/deploy-pages@v4
 
-  # deploy:
-  #   name: Deploy to GitHub Pages
-  #   runs-on: ubuntu-latest
-  #   if: always()
-  #   needs:
-  #     - ci_pipeline
-  #   permissions:
-  #     contents: read
-  #     pages: write
-  #     id-token: write
-  #   environment:
-  #     name: github-pages
-  #     url: https://tadeu-dutra.github.io/string-search-app/lcov-report/index.html
-  #   steps:
+  deploy:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    if: always()
+    needs:
+      - test
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: https://tadeu-dutra.github.io/string-search-app/index.html
+    steps:
+      - name: Prepare Web Application Build
+        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
+        run: |
+          npm run build
+          cp -r coverage/ dist/coverage/ || echo "No coverage to copy"
+          cp coverage/index.html dist/coverage/index.html || echo "No coverage index to copy"
+
+      - name: Upload Web Application Artifact
+        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/
   #     # - name: Deploy to GitHub Pages
   #     #   if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
   #     #   uses: actions/deploy-pages@v4
