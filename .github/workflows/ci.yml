@@ -55,7 +55,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     if: always()
-    needs: test
+    # needs: test
     permissions:
       pages: write
       id-token: write
