@@ -47,11 +47,11 @@ jobs:
       #   with:
       #     path: dist/
 
-      # - name: Prepare Coverage Report
-      #   if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-      #   run: |
-      #     cp coverage/lcov-report/index.html coverage/index.html
-      #     echo "<!DOCTYPE html><html><body><h1>Coverage Report</h1><p><a href=\"lcov-report/index.html\">View Coverage</a></p></body></html>" > coverage/index.html
+      - name: Prepare Coverage Report
+        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
+        run: |
+          cp coverage/lcov-report/index.html coverage/index.html
+          echo "<!DOCTYPE html><html><body><h1>Coverage Report</h1><p><a href=\"lcov-report/index.html\">View Coverage</a></p></body></html>" > coverage/index.html
 
       - name: Upload Coverage Report Artifact
         if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
