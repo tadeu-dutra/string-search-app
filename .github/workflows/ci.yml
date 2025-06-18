@@ -65,10 +65,15 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    if: always()
+    needs:
+      - test
     permissions:
       pages: write
       id-token: write
-
+    environment:
+      name: github-pages
+      url: https://tadeu-dutra.github.io/string-search-app/index.html
     steps:
       # - name: Checkout code
       #   uses: actions/checkout@v4
