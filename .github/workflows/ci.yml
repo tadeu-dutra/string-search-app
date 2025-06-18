@@ -146,81 +146,37 @@ jobs:
       id-token: write
     environment:
       name: github-pages-app
-      url: https://tadeu-dutra.github.io/string-search-app/
+      url: https://tadeu-dutra.github.io/string-search-app/index.html
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          path: string-search-app
+        # with:
+        #   path: .
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
-          cache-dependency-path: string-search-app/package.json
+          # cache-dependency-path: package.json
 
       - name: Install dependencies
         run: npm install
-        working-directory: string-search-app
+        # working-directory: .
 
       - name: Build Web Application
-        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
         run: |
-          npm run build -- --display-error-details || { echo "Build failed"; exit 1; }
-          echo "Build output:"
-          ls -la string-search-app/dist/ || echo "dist/ directory not found after build"
-          if [ -f string-search-app/dist/index.html ]; then
-            echo "index.html contents:"
-            cat string-search-app/dist/index.html
-          else
-            echo "index.html not found in dist/"
-          fi
-        working-directory: string-search-app
-
-      - name: Prepare Web Application
-        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-        run: |
-          mkdir -p string-search-app/public
-          if [ -d "string-search-app/dist/" ]; then
-            cp -r string-search-app/dist/* string-search-app/public/
-            if [ -f string-search-app/dist/index.html ]; then
-              cp string-search-app/dist/index.html string-search-app/public/index.html
-            else
-              echo "index.html not found in dist/, creating placeholder"
-              echo "<html><body><h1>Application Not Built Correctly</h1></body></html>" > string-search-app/public/index.html
-            fi
-          else
-            echo "dist/ not found, skipping copy"
-            echo "<html><body><h1>Build Failed</h1></body></html>" > string-search-app/public/index.html
-          fi
-          ls -la string-search-app/public/ || echo "public/ directory empty or not created"
-        working-directory: .
-
-      - name: Download Coverage Artifact
-        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-        uses: actions/download-artifact@v4
-        with:
-          name: coverage-artifact
-          path: string-search-app/coverage/
-
-      - name: Copy Coverage to Public
-        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-        run: |
-          cp -r string-search-app/coverage/ string-search-app/public/coverage/ || echo "No coverage to copy"
-        working-directory: .
-
-      - name: Inspect Public Directory
-        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-        run: ls -la string-search-app/public/
-        working-directory: .
-
-      - name: Upload Pages Artifact
-        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
+          npm run build || { echo "Build failed"; exit 1; }
+          ls -la dist/ || echo "dist/ directory not found after build"
+        env:
+          NODE_ENV: production
+        # working-directory: .
+      
+      - name: Upload pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: string-search-app/public/
-
+          path: dist/
+      
       - name: Deploy to GitHub Pages
         if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
         uses: actions/deploy-pages@v4
