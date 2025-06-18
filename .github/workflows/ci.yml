@@ -150,19 +150,19 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        # with:
-        #   path: .
+        with:
+          path: .
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
-          # cache-dependency-path: package.json
+          cache-dependency-path: package.json
 
       - name: Install dependencies
         run: npm install
-        # working-directory: .
+        working-directory: .
 
       - name: Build Web Application
         run: |
@@ -170,7 +170,7 @@ jobs:
           ls -la dist/ || echo "dist/ directory not found after build"
         env:
           NODE_ENV: production
-        # working-directory: .
+        working-directory: .
       
       - name: Upload pages artifact
         uses: actions/upload-pages-artifact@v3
