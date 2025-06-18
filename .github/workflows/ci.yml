@@ -79,11 +79,11 @@ jobs:
         run: npm install
         working-directory: .
 
-      # - name: Build Web Application
-      #   run: |
-      #     npm run build || { echo "Build failed"; exit 1; }
-      #     ls -la dist/ || echo "dist/ directory not found after build"
-      #   working-directory: .
+      - name: Build Web Application
+        run: |
+          npm run build || { echo "Build failed"; exit 1; }
+          ls -la dist/ || echo "dist/ directory not found after build"
+        working-directory: .
       
       - name: Upload pages artifact
         uses: actions/upload-pages-artifact@v3
