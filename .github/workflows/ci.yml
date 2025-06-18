@@ -27,9 +27,9 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: 'latest'
           cache: 'npm'
-          cache-dependency-path: string-search-app/package.json
+          cache-dependency-path: 'package-lock.json'
 
       - name: Install dependencies
         run: npm install
@@ -60,7 +60,6 @@ jobs:
           NODE_ENV: development
         with:
           path: coverage/
-          overwrite: true
 
       - name: Deploy to GitHub Pages
         if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
@@ -69,7 +68,6 @@ jobs:
           NODE_ENV: development
         with:
           path: coverage/
-          overwrite: true
 
 
 
@@ -169,10 +167,9 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          overwrite: true
+          node-version: 'latest'
           cache: 'npm'
-          cache-dependency-path: package.json
+          cache-dependency-path: 'package-lock.json'
 
       - name: Install dependencies
         run: npm install
@@ -184,7 +181,6 @@ jobs:
           ls -la dist/ || echo "dist/ directory not found after build"
         env:
           NODE_ENV: production
-          overwrite: true
         # working-directory: .
       
       # - name: Upload pages artifact
@@ -200,7 +196,6 @@ jobs:
           NODE_ENV: production
         with:
           path: dist/
-          overwrite: true
 
 
 
