@@ -17,7 +17,7 @@ jobs:
       id-token: write
     environment:
       name: github-pages-tests
-      url: https://tadeu-dutra.github.io/string-search-app/lcov-report/index.html
+      url: https://tadeu-dutra.github.io/string-search-app/coverage/index.html
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
