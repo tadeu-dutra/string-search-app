@@ -174,7 +174,7 @@ jobs:
         with:
           node-version: 'latest'
           cache: 'npm'
-          cache-dependency-path: 'package-lock.json'
+          cache-dependency-path: package-lock.json
           overwrite: true
 
       - name: Install dependencies
