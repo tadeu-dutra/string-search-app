@@ -83,6 +83,8 @@ jobs:
         run: |
           npm run build || { echo "Build failed"; exit 1; }
           ls -la dist/ || echo "dist/ directory not found after build"
+        env:
+          NODE_ENV: production
         # working-directory: .
       
       - name: Upload pages artifact
