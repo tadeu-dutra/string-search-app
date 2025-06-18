@@ -42,10 +42,7 @@ jobs:
       - name: Prepare Coverage Report
         if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
         run: |
-          # Copiar o índice personalizado para coverage/index.html
           echo "<!DOCTYPE html><html><body><h1>Coverage Report</h1><p><a href=\"lcov-report/index.html\">View Coverage</a></p></body></html>" > string-search-app/coverage/index.html
-          # Preservar o diretório lcov-report intacto
-          cp -r string-search-app/coverage/lcov-report/ string-search-app/coverage/lcov-report/ || echo "lcov-report already exists or not found"
         working-directory: .
 
       - name: Inspect Coverage Directory
@@ -58,6 +55,10 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: string-search-app/coverage/
+
+      - name: Deploy to GitHub Pages
+        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
+        uses: actions/deploy-pages@v4
 
   # deploy:
   #   runs-on: ubuntu-latest
