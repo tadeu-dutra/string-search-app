@@ -86,20 +86,19 @@ jobs:
           ls -la dist/ || echo "dist/ directory not found after build"
         working-directory: .
 
-      - name: Download Coverage Artifact
-        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-        uses: actions/download-artifact@v4
-        with:
-          name: github-pages-artifact-test  # Default name for upload-pages-artifact
-          path: coverage/
+      # - name: Download Coverage Artifact
+      #   if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: github-pages-artifact-test  # Default name for upload-pages-artifact
+      #     path: coverage/
 
       - name: Prepare Web Application and Coverage
         if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
         run: |
           mkdir -p public
           if [ -d "dist/" ]; then cp -r dist/* public/; else echo "dist/ not found, skipping copy"; fi
-          cp -r coverage/ public/coverage/ || echo "No coverage to copy"
-          cp coverage/index.html public/coverage/index.html || echo "No coverage index to copy"
+          cp . public/ || echo "No coverage index to copy"
         working-directory: .
 
       - name: Prepare Coverage Report
