@@ -159,7 +159,7 @@ jobs:
       id-token: write
     environment:
       name: github-pages-app
-      url: https://tadeu-dutra.github.io/string-search-app
+      url: https://tadeu-dutra.github.io/string-search-app/index.html
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -170,6 +170,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
+          overwrite: true
           # cache: 'npm'
           # cache-dependency-path: package.json
 
@@ -183,6 +184,7 @@ jobs:
           ls -la dist/ || echo "dist/ directory not found after build"
         env:
           NODE_ENV: production
+          overwrite: true
         # working-directory: .
       
       # - name: Upload pages artifact
