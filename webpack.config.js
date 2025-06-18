@@ -34,7 +34,7 @@ module.exports = {
             filename: 'index.html',
         }),
         new CopyPlugin({
-            patterns: [{ from: 'css/styles.css', to: 'styles.css' }]
+            patterns: [{ from: './css/styles.css', to: 'styles.css' }]
         }),
     ],
     devServer: {
