@@ -10,69 +10,69 @@ on:
   workflow_dispatch:  # Allow manual triggering
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages-tests
-      url: https://tadeu-dutra.github.io/string-search-app/lcov-report/index.html
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          overwrite: true
-        # with:
-        #   path: string-search-app
+  # test:
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     pages: write
+  #     id-token: write
+  #   environment:
+  #     name: github-pages-tests
+  #     url: https://tadeu-dutra.github.io/string-search-app/lcov-report/index.html
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+  #       with:
+  #         overwrite: true
+  #       # with:
+  #       #   path: string-search-app
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 'latest'
-          cache: 'npm'
-          cache-dependency-path: 'package-lock.json'
-          overwrite: true
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 'latest'
+  #         cache: 'npm'
+  #         cache-dependency-path: 'package-lock.json'
+  #         overwrite: true
 
-      - name: Install dependencies
-        run: npm install
-        # working-directory: string-search-app/lcov-report
+  #     - name: Install dependencies
+  #       run: npm install
+  #       # working-directory: string-search-app/lcov-report
 
-      - name: Test and Generate Coverage
-        run: npm run test:coverage
-        # env:
-        #   NODE_ENV: development
-        # working-directory: string-search-app/lcov-report
+  #     - name: Test and Generate Coverage
+  #       run: npm run test:coverage
+  #       # env:
+  #       #   NODE_ENV: development
+  #       # working-directory: string-search-app/lcov-report
 
-      # - name: Prepare Coverage Report
-      #   if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-      #   run: |
-      #     echo "<!DOCTYPE html><html><body><h1>Coverage Report</h1><p><a href=\"lcov-report/index.html\">View Coverage</a></p></body></html>" > string-search-app/coverage/index.html
-      #   # working-directory: .
+  #     # - name: Prepare Coverage Report
+  #     #   if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
+  #     #   run: |
+  #     #     echo "<!DOCTYPE html><html><body><h1>Coverage Report</h1><p><a href=\"lcov-report/index.html\">View Coverage</a></p></body></html>" > string-search-app/coverage/index.html
+  #     #   # working-directory: .
 
-      # - name: Inspect Coverage Directory
-      #   if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-      #   # run: ls -la string-search-app/coverage/
-      #   run: ls -la string-search-app/lcov-report
-      #   # working-directory: .
+  #     # - name: Inspect Coverage Directory
+  #     #   if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
+  #     #   # run: ls -la string-search-app/coverage/
+  #     #   run: ls -la string-search-app/lcov-report
+  #     #   # working-directory: .
 
-      - name: Upload Coverage Report Artifact
-        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-        uses: actions/upload-pages-artifact@v3
-        # env:
-        #   NODE_ENV: development
-        with:
-          path: coverage/
-          overwrite: true
+  #     - name: Upload Coverage Report Artifact
+  #       if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
+  #       uses: actions/upload-pages-artifact@v3
+  #       # env:
+  #       #   NODE_ENV: development
+  #       with:
+  #         path: coverage/
+  #         overwrite: true
 
-      - name: Deploy to GitHub Pages
-        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-        uses: actions/deploy-pages@v4
-        # env:
-        #   NODE_ENV: development
-        with:
-          path: coverage/
-          overwrite: true
+  #     - name: Deploy to GitHub Pages
+  #       if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
+  #       uses: actions/deploy-pages@v4
+  #       # env:
+  #       #   NODE_ENV: development
+  #       with:
+  #         path: coverage/
+  #         overwrite: true
 
 
 
@@ -156,7 +156,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     if: always()
-    needs: test
+    # needs: test
     permissions:
       pages: write
       id-token: write
