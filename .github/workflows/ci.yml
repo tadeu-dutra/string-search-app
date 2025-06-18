@@ -92,7 +92,9 @@ jobs:
         if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
         run: |
           npm run build || { echo "Build failed"; exit 1; }
-          ls -la dist/ || echo "dist/ directory not found after build"
+          echo "Build output:"
+          ls -la string-search-app/dist/ || echo "dist/ directory not found after build"
+          cat string-search-app/dist/index.html || echo "index.html not found or empty"
         working-directory: string-search-app
 
       - name: Prepare Web Application
@@ -100,6 +102,7 @@ jobs:
         run: |
           mkdir -p string-search-app/public
           if [ -d "string-search-app/dist/" ]; then cp -r string-search-app/dist/* string-search-app/public/; else echo "dist/ not found, skipping copy"; fi
+          ls -la string-search-app/public/ || echo "public/ directory empty or not created"
         working-directory: .
 
       - name: Inspect Public Directory
