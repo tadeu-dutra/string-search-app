@@ -80,11 +80,21 @@ jobs:
         working-directory: .
 
       - name: Build Web Application
+        run: npm run build
+      
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/
+      
+      - name: Deploy to GitHub Pages
         if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-        run: |
-          npm run build || { echo "Build failed"; exit 1; }
-          ls -la dist/ || echo "dist/ directory not found after build"
-        working-directory: .
+        uses: actions/deploy-pages@v4
+        # if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
+        # run: |
+        #   npm run build || { echo "Build failed"; exit 1; }
+        #   ls -la dist/ || echo "dist/ directory not found after build"
+        # working-directory: .
 
       # - name: Download Coverage Artifact
       #   if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
@@ -93,12 +103,12 @@ jobs:
       #     name: github-pages-artifact-test  # Default name for upload-pages-artifact
       #     path: coverage/
 
-      - name: Prepare Web Application and Coverage
-        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-        run: |
-          mkdir -p public
-          if [ -d "dist/" ]; then cp -r dist/* public/; else echo "dist/ not found, skipping copy"; fi
-        working-directory: .
+      # - name: Prepare Web Application and Coverage
+      #   if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
+      #   run: |
+      #     mkdir -p public
+      #     if [ -d "dist/" ]; then cp -r dist/* public/; else echo "dist/ not found, skipping copy"; fi
+      #   working-directory: .
 
       # - name: Prepare Coverage Report
       #   if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
@@ -113,8 +123,8 @@ jobs:
       #   with:
       #     path: public/
 
-      - name: Deploy to GitHub Pages
-        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-        uses: actions/deploy-pages@v4
-        with:
-          path: public/
+      # - name: Deploy to GitHub Pages
+      #   if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
+      #   uses: actions/deploy-pages@v4
+      #   with:
+      #     path: dist/
