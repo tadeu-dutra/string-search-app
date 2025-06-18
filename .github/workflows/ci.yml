@@ -29,17 +29,17 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-          # cache-dependency-path: package.json
+          cache-dependency-path: package.json
 
       - name: Install dependencies
         run: npm install
-        # working-directory: .
+        working-directory: .
 
       - name: Test and Generate Coverage
         run: npm run test:coverage
         # env:
         #   NODE_ENV: development
-        # working-directory: .
+        working-directory: .
 
       - name: Prepare Coverage Report
         if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
