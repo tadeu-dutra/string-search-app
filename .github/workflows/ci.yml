@@ -47,14 +47,16 @@ jobs:
 
       - name: Inspect Coverage Directory
         if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-        run: ls -la string-search-app/coverage/
+        # run: ls -la string-search-app/coverage/
+        run: ls -la string-search-app
         working-directory: .
 
       - name: Upload Coverage Report Artifact
         if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
         uses: actions/upload-pages-artifact@v3
         with:
-          path: string-search-app/coverage/
+          path: string-search-app
+          # path: string-search-app/coverage/
 
       - name: Deploy to GitHub Pages
         if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
@@ -142,7 +144,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     if: always()
-    # needs: test
+    needs: test
     permissions:
       pages: write
       id-token: write
