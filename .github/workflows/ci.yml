@@ -64,23 +64,52 @@ jobs:
       #   uses: actions/deploy-pages@v4
 
   deploy:
-    name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
-    if: always()
-    needs:
-      - test
     permissions:
-      contents: read
       pages: write
       id-token: write
-    environment:
-      name: github-pages
-      url: https://tadeu-dutra.github.io/string-search-app/index.html
+
     steps:
-      - name: Prepare Web Application Build
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build web application
+        run: npm run build
+
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/  # Deploy the Webpack output
+
+      - name: Deploy to GitHub Pages
         if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-        run: |
-          npm run build
+        uses: actions/deploy-pages@v4
+    # name: Deploy to GitHub Pages
+    # runs-on: ubuntu-latest
+    # if: always()
+    # needs:
+    #   - test
+    # permissions:
+    #   contents: read
+    #   pages: write
+    #   id-token: write
+    # environment:
+    #   name: github-pages
+    #   url: https://tadeu-dutra.github.io/string-search-app/index.html
+    # steps:
+    #   - name: Prepare Web Application Build
+    #     if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
+    #     run: |
+    #       npm run build
 
         # run: |
         #   npm run build
