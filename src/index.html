@@ -4,17 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>String Search Application</title>
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <div class="search-container">
-        <h2>String Search</h2>
-        <div class="input-group">
-            <label for="searchInput">Enter text to search:</label>
-            <input type="text" id="searchInput" placeholder="Type your search item..." aria-describedby="searchHelp">
-            <small id="searchHelp" class="form-text">Enter a word or phrase to find in: "The book is on the table!"</small>
+    <div id="app">
+        <div class="search-container">
+            <h2>String Search</h2>
+            <div class="input-group">
+                <label for="searchInput">Enter text to search:</label>
+                <input type="text" id="searchInput" placeholder="Type your search term..." aria-describedby="searchHelp">
+                <small id="searchHelp" class="form-text">Enter a word or phrase to find in: "The book is on the table!"</small>
+            </div>
+            <button id="searchButton">Search</button>
+            <div id="result" class="result"></div>
         </div>
-        <button id="searchButton">Search</button>
-        <div id="result" class="result" role="alert"></div>
     </div>
+    <script src="bundle.js"></script>
 </body>
 </html>
