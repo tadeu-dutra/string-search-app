@@ -28,7 +28,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'npm'
+          # cache: 'npm'
           # cache-dependency-path: string-search-app/package.json
 
       - name: Install dependencies
@@ -56,6 +56,8 @@ jobs:
       - name: Upload Coverage Report Artifact
         if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
         uses: actions/upload-pages-artifact@v3
+        env:
+          NODE_ENV: development
         with:
           path: coverage/
           overwrite: true
@@ -63,6 +65,8 @@ jobs:
       - name: Deploy to GitHub Pages
         if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
         uses: actions/deploy-pages@v4
+        env:
+          NODE_ENV: development
         with:
           path: coverage/
           overwrite: true
@@ -166,7 +170,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'npm'
+          # cache: 'npm'
           # cache-dependency-path: package.json
 
       - name: Install dependencies
@@ -190,6 +194,8 @@ jobs:
       - name: Deploy to GitHub Pages
         # if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
         uses: actions/deploy-pages@v4
+        env:
+          NODE_ENV: production
         with:
           path: dist/
           overwrite: true
