@@ -16,8 +16,8 @@ jobs:
       pages: write
       id-token: write
     environment:
-      name: github-pages
-      url: https://tadeu-dutra.github.io/string-search-app/lcov-report/index.html
+      name: github-pages-tests
+      url: https://tadeu-dutra.github.io/string-search-app/coverage/lcov-report/index.html
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -39,31 +39,24 @@ jobs:
         run: npm run test:coverage
         working-directory: string-search-app
 
-      # - name: Prepare Web Application Build
-      #   if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-      #   run: |
-      #     npm run build
-      #     cp -r coverage/ dist/coverage/ || echo "No coverage to copy"
-      #     cp coverage/index.html dist/coverage/index.html || echo "No coverage index to copy"
-
-      # - name: Upload Web Application Artifact
-      #   if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-      #   uses: actions/upload-pages-artifact@v3
-      #   with:
-      #     path: dist/
-
       - name: Prepare Coverage Report
         if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
         run: |
-          cp coverage/lcov-report/index.html coverage/index.html
-          echo "<!DOCTYPE html><html><body><h1>Coverage Report</h1><p><a href=\"lcov-report/index.html\">View Coverage</a></p></body></html>" > coverage/index.html
-        working-directory: string-search-app
+          # Copiar o índice personalizado para coverage/index.html
+          echo "<!DOCTYPE html><html><body><h1>Coverage Report</h1><p><a href=\"lcov-report/index.html\">View Coverage</a></p></body></html>" > string-search-app/coverage/index.html
+          # Preservar o diretório lcov-report intacto
+          cp -r string-search-app/coverage/lcov-report/ string-search-app/coverage/lcov-report/ || echo "lcov-report already exists or not found"
+        working-directory: .
+
+      - name: Inspect Coverage Directory
+        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
+        run: ls -la string-search-app/coverage/
+        working-directory: .
 
       - name: Upload Coverage Report Artifact
         if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
         uses: actions/upload-pages-artifact@v3
         with:
-          name: coverage-artifact
           path: string-search-app/coverage/
 
   # deploy:
