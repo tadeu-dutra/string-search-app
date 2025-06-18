@@ -138,7 +138,6 @@ If not installed, download from [nodejs.org](https://nodejs.org/).
 - **HtmlWebpackPlugin:** Injects the bundle into `index.html`
 - **Babel:** Transpiles modern JavaScript for browser compatibility
 - **Dev Server:** Local server with hot reloading
-- **CSS Handling:** CSS is inlined for simplicity; for production, consider using `MiniCssExtractPlugin`
 - **Clean Output:** `clean: true` ensures `dist/` is cleared before each build
 
 ---
@@ -155,15 +154,13 @@ To run tests with coverage:
 
 ### Test Coverage
 
-The following tests are executed:
+The tests cover:
 
-1. should return index and display success message when string is found
-2. should return -1 and display error message when string is not found
-3. should handle case-insensitive search correctly
-4. should display error message and return -1 for empty input
-5. should display error message and return -1 for non-string input
-6. should find substring at the start of the text
-7. should find substring at the end of the text
+    Successful string matches (including case-insensitive searches).
+    Unsuccessful searches (string not found).
+    Edge cases (empty input, non-string input).
+    Boundary conditions (strings at the start and end of the text).
+    Proper DOM updates (message, class, and ARIA attributes).
 
 ---
 
