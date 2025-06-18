@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-          cache-dependency-path: string-search-app/package-lock.json
+          cache-dependency-path: package-lock.json
           overwrite: true
 
       - name: Install dependencies
@@ -68,7 +68,7 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-          cache-dependency-path: string-search-app/package-lock.json
+          cache-dependency-path: package-lock.json
           overwrite: true
 
       - name: Install dependencies
