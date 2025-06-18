@@ -33,11 +33,13 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: .
+        # working-directory: .
 
       - name: Test and Generate Coverage
         run: npm run test:coverage
-        working-directory: .
+        env:
+          NODE_ENV: development
+        # working-directory: .
 
       # - name: Prepare Coverage Report
       #   if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
@@ -52,49 +54,49 @@ jobs:
         with:
           path: coverage/
 
-  deploy:
-    runs-on: ubuntu-latest
-    if: always()
-    needs: test
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages-app
-      url: https://tadeu-dutra.github.io/string-search-app/index.html
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        # with:
-        #   path: .
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   if: always()
+  #   needs: test
+  #   permissions:
+  #     pages: write
+  #     id-token: write
+  #   environment:
+  #     name: github-pages-app
+  #     url: https://tadeu-dutra.github.io/string-search-app/index.html
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+  #       # with:
+  #       #   path: .
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'npm'
-          # cache-dependency-path: package.json
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: '18'
+  #         cache: 'npm'
+  #         # cache-dependency-path: package.json
 
-      - name: Install dependencies
-        run: npm install
-        # working-directory: .
+  #     - name: Install dependencies
+  #       run: npm install
+  #       # working-directory: .
 
-      - name: Build Web Application
-        run: |
-          npm run build || { echo "Build failed"; exit 1; }
-          ls -la dist/ || echo "dist/ directory not found after build"
-        env:
-          NODE_ENV: production
-        # working-directory: .
+  #     - name: Build Web Application
+  #       run: |
+  #         npm run build || { echo "Build failed"; exit 1; }
+  #         ls -la dist/ || echo "dist/ directory not found after build"
+  #       env:
+  #         NODE_ENV: production
+  #       # working-directory: .
       
-      - name: Upload pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist/
+  #     - name: Upload pages artifact
+  #       uses: actions/upload-pages-artifact@v3
+  #       with:
+  #         path: dist/
       
-      - name: Deploy to GitHub Pages
-        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-        uses: actions/deploy-pages@v4
+  #     - name: Deploy to GitHub Pages
+  #       if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
+  #       uses: actions/deploy-pages@v4
 
 
 
