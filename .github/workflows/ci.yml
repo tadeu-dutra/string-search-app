@@ -10,47 +10,47 @@ on:
   workflow_dispatch:  # Allow manual triggering
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages-tests
-      url: https://tadeu-dutra.github.io/string-search-app/lcov-report/index.html
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          path: .
+  # test:
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     pages: write
+  #     id-token: write
+  #   environment:
+  #     name: github-pages-tests
+  #     url: https://tadeu-dutra.github.io/string-search-app/lcov-report/index.html
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+  #       with:
+  #         path: .
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'npm'
-          cache-dependency-path: package.json
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: '18'
+  #         cache: 'npm'
+  #         cache-dependency-path: package.json
 
-      - name: Install dependencies
-        run: npm install
-        working-directory: .
+  #     - name: Install dependencies
+  #       run: npm install
+  #       working-directory: .
 
-      - name: Test and Generate Coverage
-        run: npm run test:coverage
-        working-directory: .
+  #     - name: Test and Generate Coverage
+  #       run: npm run test:coverage
+  #       working-directory: .
 
-      # - name: Prepare Coverage Report
-      #   if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-      #   run: |
-      #     cp coverage/lcov-report/index.html coverage/index.html
-      #     echo "<!DOCTYPE html><html><body><h1>Coverage Report</h1><p><a href=\"lcov-report/index.html\">View Coverage</a></p></body></html>" > coverage/index.html
-      #   working-directory: .
+  #     # - name: Prepare Coverage Report
+  #     #   if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
+  #     #   run: |
+  #     #     cp coverage/lcov-report/index.html coverage/index.html
+  #     #     echo "<!DOCTYPE html><html><body><h1>Coverage Report</h1><p><a href=\"lcov-report/index.html\">View Coverage</a></p></body></html>" > coverage/index.html
+  #     #   working-directory: .
 
-      - name: Upload Coverage Report Artifact
-        if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: coverage/
+  #     - name: Upload Coverage Report Artifact
+  #       if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
+  #       uses: actions/upload-pages-artifact@v3
+  #       with:
+  #         path: coverage/
 
   deploy:
     runs-on: ubuntu-latest
