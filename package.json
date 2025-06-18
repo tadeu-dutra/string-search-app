@@ -13,8 +13,14 @@
     "testEnvironment": "jsdom",
     "coverageDirectory": "coverage",
     "collectCoverage": true,
-    "collectCoverageFrom": ["src/stringSearch.js"],
-    "coverageReporters": ["html", "text", "lcov"]
+    "collectCoverageFrom": [
+      "src/stringSearch.js"
+    ],
+    "coverageReporters": [
+      "html",
+      "text",
+      "lcov"
+    ]
   },
   "keywords": [],
   "author": "Tadeu Augusto Dutra Pinto",
@@ -30,6 +36,7 @@
     "style-loader": "^4.0.0",
     "webpack": "^5.99.9",
     "webpack-cli": "^6.0.1",
-    "webpack-dev-server": "^5.2.2"
+    "webpack-dev-server": "^5.2.2",
+    "copy-webpack-plugin": "^13.0.0"
   }
 }
