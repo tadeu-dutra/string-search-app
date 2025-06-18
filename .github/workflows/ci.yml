@@ -63,10 +63,10 @@ jobs:
       name: github-pages-app
       url: https://tadeu-dutra.github.io/string-search-app/index.htnl
     steps:
-      # - name: Checkout code
-      #   uses: actions/checkout@v4
-      #   with:
-      #     path: .
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          path: .
 
       # - name: Set up Node.js
       #   uses: actions/setup-node@v4
