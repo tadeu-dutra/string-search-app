@@ -179,10 +179,10 @@ jobs:
           NODE_ENV: production
         # working-directory: .
       
-      # - name: Upload pages artifact
-      #   uses: actions/upload-pages-artifact@v3
-      #   with:
-      #     path: dist/
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/
       #     overwrite: true
       
       - name: Deploy to GitHub Pages
