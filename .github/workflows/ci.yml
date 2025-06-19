@@ -10,15 +10,14 @@ on:
   workflow_dispatch:  # Allow manual triggering
 
 jobs:
-  test:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    if: always()
     permissions:
       pages: write
       id-token: write
     environment:
-      name: github-pages-tests
-      url: https://tadeu-dutra.github.io/string-search-app/lcov-report/index.html
+      name: github-pages
+      url: https://tadeu-dutra.github.io/string-search-app/
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -31,130 +30,26 @@ jobs:
       - name: Install dependencies
         run: npm install -U
 
-      - name: Test and Generate Coverage
+      - name: Run tests and generate coverage
         run: npm run test:coverage
 
-      - name: Upload Coverage Report Artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: coverage/
-
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
-        with:
-          path: coverage/
-
-  deploy:
-    runs-on: ubuntu-latest
-    if: always()
-    needs: test
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages-app
-      url: https://tadeu-dutra.github.io/string-search-app/index.html
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          # cache: 'npm'
-          # cache-dependency-path: package-lock.json
-          # overwrite: true
-
-      - name: Install dependencies
-        run: npm install -U
-
-      - name: Build Web Application
+      - name: Build web application
         run: npm run build
-      
-      - name: Upload pages artifact
+
+      - name: Prepare coverage report artifact
+        run: |
+          mkdir -p public/coverage
+          cp -r coverage/* public/coverage/
+
+      - name: Prepare web application artifact
+        run: |
+          mkdir -p public/dist
+          cp -r dist/* public/dist/
+
+      - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/
+          path: public/
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
-        with:
-          path: dist/
-
-
-
-
-
-
-
-# ]
-
-#   deploy:
-#     runs-on: ubuntu-latest
-#     if: always()
-#     needs: test
-#     permissions:
-#       pages: write
-#       id-token: write
-#     environment:
-#       name: github-pages-app
-#       url: https://tadeu-dutra.github.io/string-search-app/index.htnl
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v4
-#         with:
-#           path: .
-
-#       - name: Set up Node.js
-#         uses: actions/setup-node@v4
-#         with:
-#           node-version: '18'
-#           cache: 'npm'
-#           cache-dependency-path: package.json
-
-#       - name: Install dependencies
-#         run: npm install
-#         working-directory: .
-
-#       - name: Build Web Application
-#         run: npm run build
-        
-#         # if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-#         # run: |
-#         #   npm run build || { echo "Build failed"; exit 1; }
-#         #   ls -la dist/ || echo "dist/ directory not found after build"
-#         # working-directory: .
-
-#       # - name: Download Coverage Artifact
-#       #   if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-#       #   uses: actions/download-artifact@v4
-#       #   with:
-#       #     name: github-pages-artifact-test  # Default name for upload-pages-artifact
-#       #     path: coverage/
-
-#       # - name: Prepare Web Application and Coverage
-#       #   if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-#       #   run: |
-#       #     mkdir -p public
-#       #     if [ -d "dist/" ]; then cp -r dist/* public/; else echo "dist/ not found, skipping copy"; fi
-#       #   working-directory: .
-
-#       # - name: Prepare Coverage Report
-#       #   if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-#       #   run: |
-#       #     cp coverage/lcov-report/index.html public/coverage/index.html
-#       #     echo "<!DOCTYPE html><html><body><h1>Coverage Report</h1><p><a href=\"coverage/lcov-report/index.html\">View Coverage</a></p></body></html>" > public/coverage/index.html
-#       #   working-directory: .
-
-#       # - name: Upload Pages Artifact
-#       #   if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-#       #   uses: actions/upload-pages-artifact@v3
-#       #   with:
-#       #     path: public/
-
-#       - name: Deploy to GitHub Pages
-#         if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
-#         uses: actions/deploy-pages@v4
-#         with:
-#           path: dist/
