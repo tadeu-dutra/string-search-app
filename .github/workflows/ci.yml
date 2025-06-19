@@ -68,8 +68,8 @@ jobs:
       - name: Deploy to GitHub Pages
         # if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
         uses: actions/deploy-pages@v4
-        # env:
-        #   NODE_ENV: development
+        env:
+          NODE_ENV: development
         with:
           path: coverage/
           overwrite: true
@@ -199,8 +199,8 @@ jobs:
       - name: Deploy to GitHub Pages
         # if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch'
         uses: actions/deploy-pages@v4
-        # env:
-        #   NODE_ENV: production
+        env:
+          NODE_ENV: production
         with:
           path: dist/
           overwrite: true
