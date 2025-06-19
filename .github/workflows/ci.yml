@@ -27,9 +27,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          # cache: 'npm'
-          # cache-dependency-path: package-lock.json
-          # overwrite: true
 
       - name: Install dependencies
         run: npm install -U
@@ -41,13 +38,11 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: coverage/
-          overwrite: true
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
         with:
           path: coverage/
-          overwrite: true
 
   deploy:
     runs-on: ubuntu-latest
@@ -81,13 +76,11 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist/
-          overwrite: true
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
         with:
           path: dist/
-          overwrite: true
 
 
 
